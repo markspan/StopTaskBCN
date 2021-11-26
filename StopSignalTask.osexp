@@ -84,21 +84,21 @@ define inline_script ResponseCalc
 define EVTxx ResponseGiven
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[ResponseCode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
 define EVTxx SetlinesZero
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value 0
-	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _productName DUMMY
 	set _outputMode "Set Output Lines"
 	set _duration 500
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[FixdotCode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -112,7 +112,7 @@ define inline_script StartStopsignal
 define EVTxx StartTarget
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[targetcode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
