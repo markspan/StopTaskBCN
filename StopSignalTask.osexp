@@ -52,8 +52,9 @@ define inline_script CodeSettings
 	def sendStopCode():
 	    from pyEVT import EvtExchanger 
 	    yield
-	    clock.sleep(var.stop_after)
-	    EvtExchanger.PulseLines(var.StopSignalCode, 10) 
+	    if var.stop_after != "":
+	        clock.sleep(var.stop_after)
+	        EvtExchanger.PulseLines(var.StopSignalCode, 10) 
 	    
 	__end__
 	set _prepare ""
