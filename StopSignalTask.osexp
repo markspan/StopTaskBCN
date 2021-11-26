@@ -92,6 +92,7 @@ define EVTxx SetlinesZero
 	set _value 0
 	set _productName "EventExchanger-EVT02----010808 SN## 11999"
 	set _outputMode "Set Output Lines"
+	set _duration 500
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
@@ -102,8 +103,7 @@ define EVTxx StartFixdot
 
 define inline_script StartStopsignal
 	set description "Executes Python code"
-	___run__
-	__end__
+	set _run ""
 	___prepare__
 	from pyEVT import EvtExchanger 
 	__end__
@@ -131,7 +131,7 @@ define loop block_loop
 	set source table
 	set skip 0
 	set repeat 4
-	set order sequential
+	set order random
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
