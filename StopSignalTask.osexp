@@ -48,6 +48,13 @@ define inline_script CodeSettings
 	var.FixdotCode = 1
 	var.StopSignalCode = 255
 	var.PulseDuration = 10
+	
+	def sendStopCode():
+	    from pyEVT import EvtExchanger 
+	    yield
+	    clock.sleep(var.stop_after)
+	    EvtExchanger.PulseLines(var.StopSignalCode, 10) 
+	    
 	__end__
 	set _prepare ""
 
@@ -96,7 +103,6 @@ define EVTxx StartFixdot
 define inline_script StartStopsignal
 	set description "Executes Python code"
 	___run__
-	EvtExchanger.PulseLines(var.StopSignalCode, 10) 
 	__end__
 	___prepare__
 	from pyEVT import EvtExchanger 
@@ -122,11 +128,10 @@ define sketchpad blank
 	set description "Displays stimuli"
 
 define loop block_loop
-	set source_file ""
 	set source table
 	set skip 0
 	set repeat 4
-	set order random
+	set order sequential
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
@@ -139,182 +144,146 @@ define loop block_loop
 	setcycle 0 stop_after 50
 	setcycle 0 target left
 	setcycle 0 targetcode 3
-	setcycle 0 signalstop 55
 	setcycle 1 correct_response None
 	setcycle 1 stop_after 50
 	setcycle 1 target right
 	setcycle 1 targetcode 9
-	setcycle 1 signalstop 55
 	setcycle 2 correct_response None
 	setcycle 2 stop_after 150
 	setcycle 2 target left
 	setcycle 2 targetcode 4
-	setcycle 2 signalstop 155
 	setcycle 3 correct_response None
 	setcycle 3 stop_after 150
 	setcycle 3 target right
 	setcycle 3 targetcode 10
-	setcycle 3 signalstop 155
 	setcycle 4 correct_response None
 	setcycle 4 stop_after 200
 	setcycle 4 target left
 	setcycle 4 targetcode 5
-	setcycle 4 signalstop 205
 	setcycle 5 correct_response None
 	setcycle 5 stop_after 200
 	setcycle 5 target right
 	setcycle 5 targetcode 11
-	setcycle 5 signalstop 205
 	setcycle 6 correct_response None
 	setcycle 6 stop_after 50
 	setcycle 6 target left
 	setcycle 6 targetcode 3
-	setcycle 6 signalstop 55
 	setcycle 7 correct_response None
 	setcycle 7 stop_after 50
 	setcycle 7 target right
 	setcycle 7 targetcode 9
-	setcycle 7 signalstop 55
 	setcycle 8 correct_response None
 	setcycle 8 stop_after 150
 	setcycle 8 target left
 	setcycle 8 targetcode 4
-	setcycle 8 signalstop 155
 	setcycle 9 correct_response None
 	setcycle 9 stop_after 150
 	setcycle 9 target right
 	setcycle 9 targetcode 10
-	setcycle 9 signalstop 155
 	setcycle 10 correct_response None
 	setcycle 10 stop_after 200
 	setcycle 10 target left
 	setcycle 10 targetcode 5
-	setcycle 10 signalstop 205
 	setcycle 11 correct_response None
 	setcycle 11 stop_after 200
 	setcycle 11 target right
 	setcycle 11 targetcode 11
-	setcycle 11 signalstop 205
 	setcycle 12 correct_response left
 	setcycle 12 stop_after ""
 	setcycle 12 target left
 	setcycle 12 targetcode 2
-	setcycle 12 signalstop ""
 	setcycle 13 correct_response right
 	setcycle 13 stop_after ""
 	setcycle 13 target right
 	setcycle 13 targetcode 8
-	setcycle 13 signalstop ""
 	setcycle 14 correct_response left
 	setcycle 14 stop_after ""
 	setcycle 14 target left
 	setcycle 14 targetcode 2
-	setcycle 14 signalstop ""
 	setcycle 15 correct_response right
 	setcycle 15 stop_after ""
 	setcycle 15 target right
 	setcycle 15 targetcode 8
-	setcycle 15 signalstop ""
 	setcycle 16 correct_response left
 	setcycle 16 stop_after ""
 	setcycle 16 target left
 	setcycle 16 targetcode 2
-	setcycle 16 signalstop ""
 	setcycle 17 correct_response right
 	setcycle 17 stop_after ""
 	setcycle 17 target right
 	setcycle 17 targetcode 8
-	setcycle 17 signalstop ""
 	setcycle 18 correct_response left
 	setcycle 18 stop_after ""
 	setcycle 18 target left
 	setcycle 18 targetcode 2
-	setcycle 18 signalstop ""
 	setcycle 19 correct_response right
 	setcycle 19 stop_after ""
 	setcycle 19 target right
 	setcycle 19 targetcode 8
-	setcycle 19 signalstop ""
 	setcycle 20 correct_response left
 	setcycle 20 stop_after ""
 	setcycle 20 target left
 	setcycle 20 targetcode 2
-	setcycle 20 signalstop ""
 	setcycle 21 correct_response right
 	setcycle 21 stop_after ""
 	setcycle 21 target right
 	setcycle 21 targetcode 8
-	setcycle 21 signalstop ""
 	setcycle 22 correct_response left
 	setcycle 22 stop_after ""
 	setcycle 22 target left
 	setcycle 22 targetcode 2
-	setcycle 22 signalstop ""
 	setcycle 23 correct_response right
 	setcycle 23 stop_after ""
 	setcycle 23 target right
 	setcycle 23 targetcode 8
-	setcycle 23 signalstop ""
 	setcycle 24 correct_response left
 	setcycle 24 stop_after ""
 	setcycle 24 target left
 	setcycle 24 targetcode 2
-	setcycle 24 signalstop ""
 	setcycle 25 correct_response right
 	setcycle 25 stop_after ""
 	setcycle 25 target right
 	setcycle 25 targetcode 8
-	setcycle 25 signalstop ""
 	setcycle 26 correct_response left
 	setcycle 26 stop_after ""
 	setcycle 26 target left
 	setcycle 26 targetcode 2
-	setcycle 26 signalstop ""
 	setcycle 27 correct_response right
 	setcycle 27 stop_after ""
 	setcycle 27 target right
 	setcycle 27 targetcode 8
-	setcycle 27 signalstop ""
 	setcycle 28 correct_response left
 	setcycle 28 stop_after ""
 	setcycle 28 target left
 	setcycle 28 targetcode 2
-	setcycle 28 signalstop ""
 	setcycle 29 correct_response right
 	setcycle 29 stop_after ""
 	setcycle 29 target right
 	setcycle 29 targetcode 8
-	setcycle 29 signalstop ""
 	setcycle 30 correct_response left
 	setcycle 30 stop_after ""
 	setcycle 30 target left
 	setcycle 30 targetcode 2
-	setcycle 30 signalstop ""
 	setcycle 31 correct_response right
 	setcycle 31 stop_after ""
 	setcycle 31 target right
 	setcycle 31 targetcode 8
-	setcycle 31 signalstop ""
 	setcycle 32 correct_response left
 	setcycle 32 stop_after ""
 	setcycle 32 target left
 	setcycle 32 targetcode 2
-	setcycle 32 signalstop ""
 	setcycle 33 correct_response right
 	setcycle 33 stop_after ""
 	setcycle 33 target right
 	setcycle 33 targetcode 8
-	setcycle 33 signalstop ""
 	setcycle 34 correct_response left
 	setcycle 34 stop_after ""
 	setcycle 34 target left
 	setcycle 34 targetcode 2
-	setcycle 34 signalstop ""
 	setcycle 35 correct_response right
 	setcycle 35 stop_after ""
 	setcycle 35 target right
 	setcycle 35 targetcode 8
-	setcycle 35 signalstop ""
 	run trial_sequence
 
 define sequence experiment
@@ -363,17 +332,16 @@ define advanced_delay new_advanced_delay
 	set description "Waits for a specified duration"
 
 define sketchpad stop_signal
-	set duration keypress
+	set duration 0
 	set description "Displays stimuli"
 	draw rect color=red fill=1 h=64 penwidth=1 show_if=always w=64 x=-32 y=-32 z_index=0
 
 define coroutines stop_signal_coroutines
-	set function_name ""
+	set function_name sendStopCode
 	set flush_keyboard yes
 	set end_after_item kb_response
 	set duration 2000
 	set description "Run items simultaneously"
-	run StartStopsignal end="[signalstop]" runif="[stop_after] != \"\"" start="[stop_after]"
 	run stop_signal end="[stop_after]" runif="[stop_after] != \"\"" start="[stop_after]"
 	run target end=0 runif=always start=0
 	run kb_response end=2000 runif=always start=0
@@ -395,7 +363,7 @@ define sequence trial_sequence
 	run ResponseCalc always
 	run ResponseGiven "[response] = left or [response] = right"
 	run blank always
-	run SetlinesZero never
+	run SetlinesZero always
 	run ErrorFeedback "[correct] = 0"
 	run NoError "[correct] != 0"
 	run logger always
