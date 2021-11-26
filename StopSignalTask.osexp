@@ -93,7 +93,7 @@ define EVTxx SetlinesZero
 	set _value 0
 	set _productName DUMMY
 	set _outputMode "Set Output Lines"
-	set _duration 500
+	set _duration 0
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
@@ -131,12 +131,12 @@ define sketchpad blank
 define loop block_loop
 	set source table
 	set skip 0
-	set repeat 4
+	set repeat 8
 	set order random
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
-	set cycles 36
+	set cycles 18
 	set continuous no
 	set column_order "target;stop_after;correct_response"
 	set break_if_on_first yes
@@ -165,30 +165,30 @@ define loop block_loop
 	setcycle 5 stop_after 200
 	setcycle 5 target right
 	setcycle 5 targetcode 11
-	setcycle 6 correct_response None
-	setcycle 6 stop_after 50
+	setcycle 6 correct_response left
+	setcycle 6 stop_after ""
 	setcycle 6 target left
-	setcycle 6 targetcode 3
-	setcycle 7 correct_response None
-	setcycle 7 stop_after 50
+	setcycle 6 targetcode 2
+	setcycle 7 correct_response right
+	setcycle 7 stop_after ""
 	setcycle 7 target right
-	setcycle 7 targetcode 9
-	setcycle 8 correct_response None
-	setcycle 8 stop_after 150
+	setcycle 7 targetcode 8
+	setcycle 8 correct_response left
+	setcycle 8 stop_after ""
 	setcycle 8 target left
-	setcycle 8 targetcode 4
-	setcycle 9 correct_response None
-	setcycle 9 stop_after 150
+	setcycle 8 targetcode 2
+	setcycle 9 correct_response right
+	setcycle 9 stop_after ""
 	setcycle 9 target right
-	setcycle 9 targetcode 10
-	setcycle 10 correct_response None
-	setcycle 10 stop_after 200
+	setcycle 9 targetcode 8
+	setcycle 10 correct_response left
+	setcycle 10 stop_after ""
 	setcycle 10 target left
-	setcycle 10 targetcode 5
-	setcycle 11 correct_response None
-	setcycle 11 stop_after 200
+	setcycle 10 targetcode 2
+	setcycle 11 correct_response right
+	setcycle 11 stop_after ""
 	setcycle 11 target right
-	setcycle 11 targetcode 11
+	setcycle 11 targetcode 8
 	setcycle 12 correct_response left
 	setcycle 12 stop_after ""
 	setcycle 12 target left
@@ -213,78 +213,6 @@ define loop block_loop
 	setcycle 17 stop_after ""
 	setcycle 17 target right
 	setcycle 17 targetcode 8
-	setcycle 18 correct_response left
-	setcycle 18 stop_after ""
-	setcycle 18 target left
-	setcycle 18 targetcode 2
-	setcycle 19 correct_response right
-	setcycle 19 stop_after ""
-	setcycle 19 target right
-	setcycle 19 targetcode 8
-	setcycle 20 correct_response left
-	setcycle 20 stop_after ""
-	setcycle 20 target left
-	setcycle 20 targetcode 2
-	setcycle 21 correct_response right
-	setcycle 21 stop_after ""
-	setcycle 21 target right
-	setcycle 21 targetcode 8
-	setcycle 22 correct_response left
-	setcycle 22 stop_after ""
-	setcycle 22 target left
-	setcycle 22 targetcode 2
-	setcycle 23 correct_response right
-	setcycle 23 stop_after ""
-	setcycle 23 target right
-	setcycle 23 targetcode 8
-	setcycle 24 correct_response left
-	setcycle 24 stop_after ""
-	setcycle 24 target left
-	setcycle 24 targetcode 2
-	setcycle 25 correct_response right
-	setcycle 25 stop_after ""
-	setcycle 25 target right
-	setcycle 25 targetcode 8
-	setcycle 26 correct_response left
-	setcycle 26 stop_after ""
-	setcycle 26 target left
-	setcycle 26 targetcode 2
-	setcycle 27 correct_response right
-	setcycle 27 stop_after ""
-	setcycle 27 target right
-	setcycle 27 targetcode 8
-	setcycle 28 correct_response left
-	setcycle 28 stop_after ""
-	setcycle 28 target left
-	setcycle 28 targetcode 2
-	setcycle 29 correct_response right
-	setcycle 29 stop_after ""
-	setcycle 29 target right
-	setcycle 29 targetcode 8
-	setcycle 30 correct_response left
-	setcycle 30 stop_after ""
-	setcycle 30 target left
-	setcycle 30 targetcode 2
-	setcycle 31 correct_response right
-	setcycle 31 stop_after ""
-	setcycle 31 target right
-	setcycle 31 targetcode 8
-	setcycle 32 correct_response left
-	setcycle 32 stop_after ""
-	setcycle 32 target left
-	setcycle 32 targetcode 2
-	setcycle 33 correct_response right
-	setcycle 33 stop_after ""
-	setcycle 33 target right
-	setcycle 33 targetcode 8
-	setcycle 34 correct_response left
-	setcycle 34 stop_after ""
-	setcycle 34 target left
-	setcycle 34 targetcode 2
-	setcycle 35 correct_response right
-	setcycle 35 stop_after ""
-	setcycle 35 target right
-	setcycle 35 targetcode 8
 	run trial_sequence
 
 define sequence experiment
