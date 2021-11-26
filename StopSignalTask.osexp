@@ -1,0 +1,402 @@
+---
+API: 2.1
+Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit
+  simple and choice reaction time responses: a model and a method. *Journal of Experimental
+  Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
+Description: Loosely based on Logan et al. (1984)
+OpenSesame: 3.3.2
+Platform: nt
+Title: Stop-Signal Task
+---
+set width 1024
+set uniform_coordinates yes
+set title "Stop-Signal Task"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend psycho
+set round_decimals 2
+set mouse_backend psycho
+set keyboard_backend psycho
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "C:/Users/p154492/Documents/StopTaskBCN"
+set disable_garbage_collection yes
+set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
+set coordinates uniform
+set compensation 0
+set color_backend psycho
+set clock_backend psycho
+set canvas_backend psycho
+set bidi no
+set background black
+
+define inline_script CodeSettings
+	set description "Executes Python code"
+	___run__
+	var.FixdotCode = 1
+	var.StopSignalCode = 255
+	var.PulseDuration = 10
+	__end__
+	set _prepare ""
+
+define sketchpad ErrorFeedback
+	set duration 900
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Mistake!" x=0 y=0 z_index=0
+
+define sketchpad NoError
+	set duration 900
+	set description "Displays stimuli"
+
+define inline_script ResponseCalc
+	set description "Executes Python code"
+	___run__
+	isResponseCode = 128 
+	iscorrect = var.correct
+	isleft = (var.direction+1)*2
+	
+	var.ResponseCode = isResponseCode+iscorrect+isleft
+	__end__
+	___prepare__
+	var.direction = int(var.target == 'left')
+	__end__
+
+define EVTxx ResponseGiven
+	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
+	set _value "[ResponseCode]"
+	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _outputMode "Pulse Output Lines"
+	set _duration "[PulseDuration]"
+
+define EVTxx SetlinesZero
+	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
+	set _value 0
+	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _outputMode "Set Output Lines"
+
+define EVTxx StartFixdot
+	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
+	set _value "[FixdotCode]"
+	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _outputMode "Pulse Output Lines"
+	set _duration "[PulseDuration]"
+
+define inline_script StartStopsignal
+	set description "Executes Python code"
+	___run__
+	EvtExchanger.PulseLines(var.StopSignalCode, 10) 
+	__end__
+	___prepare__
+	from pyEVT import EvtExchanger 
+	__end__
+
+define EVTxx StartTarget
+	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
+	set _value "[targetcode]"
+	set _productName "EventExchanger-EVT02----010808 SN## 11999"
+	set _outputMode "Pulse Output Lines"
+	set _duration "[PulseDuration]"
+
+define notepad about_this_example
+	__note__
+	This is an example of a stop-signal task. In this experiment, participants respond to a leftward- or rightward-pointing arrow by pressing the left or right key, respectively. On some trials, a red square is presented—this is the stop signal. Participants should withold their response when the stop-signal is presented.
+	This experiment is based on, but not identical to, the studies described by Gordon Logan in:
+	- Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit simple and choice reaction time responses: a model and a method. *Journal of Experimental Psychology: Human Perception and Performance*, 10(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>
+	__end__
+	set description "A simple notepad to document your experiment. This plug-in does nothing."
+
+define sketchpad blank
+	set duration 100
+	set description "Displays stimuli"
+
+define loop block_loop
+	set source_file ""
+	set source table
+	set skip 0
+	set repeat 4
+	set order random
+	set offset no
+	set item trial_sequence
+	set description "Repeatedly runs another item"
+	set cycles 36
+	set continuous no
+	set column_order "target;stop_after;correct_response"
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 correct_response None
+	setcycle 0 stop_after 50
+	setcycle 0 target left
+	setcycle 0 targetcode 3
+	setcycle 0 signalstop 55
+	setcycle 1 correct_response None
+	setcycle 1 stop_after 50
+	setcycle 1 target right
+	setcycle 1 targetcode 9
+	setcycle 1 signalstop 55
+	setcycle 2 correct_response None
+	setcycle 2 stop_after 150
+	setcycle 2 target left
+	setcycle 2 targetcode 4
+	setcycle 2 signalstop 155
+	setcycle 3 correct_response None
+	setcycle 3 stop_after 150
+	setcycle 3 target right
+	setcycle 3 targetcode 10
+	setcycle 3 signalstop 155
+	setcycle 4 correct_response None
+	setcycle 4 stop_after 200
+	setcycle 4 target left
+	setcycle 4 targetcode 5
+	setcycle 4 signalstop 205
+	setcycle 5 correct_response None
+	setcycle 5 stop_after 200
+	setcycle 5 target right
+	setcycle 5 targetcode 11
+	setcycle 5 signalstop 205
+	setcycle 6 correct_response None
+	setcycle 6 stop_after 50
+	setcycle 6 target left
+	setcycle 6 targetcode 3
+	setcycle 6 signalstop 55
+	setcycle 7 correct_response None
+	setcycle 7 stop_after 50
+	setcycle 7 target right
+	setcycle 7 targetcode 9
+	setcycle 7 signalstop 55
+	setcycle 8 correct_response None
+	setcycle 8 stop_after 150
+	setcycle 8 target left
+	setcycle 8 targetcode 4
+	setcycle 8 signalstop 155
+	setcycle 9 correct_response None
+	setcycle 9 stop_after 150
+	setcycle 9 target right
+	setcycle 9 targetcode 10
+	setcycle 9 signalstop 155
+	setcycle 10 correct_response None
+	setcycle 10 stop_after 200
+	setcycle 10 target left
+	setcycle 10 targetcode 5
+	setcycle 10 signalstop 205
+	setcycle 11 correct_response None
+	setcycle 11 stop_after 200
+	setcycle 11 target right
+	setcycle 11 targetcode 11
+	setcycle 11 signalstop 205
+	setcycle 12 correct_response left
+	setcycle 12 stop_after ""
+	setcycle 12 target left
+	setcycle 12 targetcode 2
+	setcycle 12 signalstop ""
+	setcycle 13 correct_response right
+	setcycle 13 stop_after ""
+	setcycle 13 target right
+	setcycle 13 targetcode 8
+	setcycle 13 signalstop ""
+	setcycle 14 correct_response left
+	setcycle 14 stop_after ""
+	setcycle 14 target left
+	setcycle 14 targetcode 2
+	setcycle 14 signalstop ""
+	setcycle 15 correct_response right
+	setcycle 15 stop_after ""
+	setcycle 15 target right
+	setcycle 15 targetcode 8
+	setcycle 15 signalstop ""
+	setcycle 16 correct_response left
+	setcycle 16 stop_after ""
+	setcycle 16 target left
+	setcycle 16 targetcode 2
+	setcycle 16 signalstop ""
+	setcycle 17 correct_response right
+	setcycle 17 stop_after ""
+	setcycle 17 target right
+	setcycle 17 targetcode 8
+	setcycle 17 signalstop ""
+	setcycle 18 correct_response left
+	setcycle 18 stop_after ""
+	setcycle 18 target left
+	setcycle 18 targetcode 2
+	setcycle 18 signalstop ""
+	setcycle 19 correct_response right
+	setcycle 19 stop_after ""
+	setcycle 19 target right
+	setcycle 19 targetcode 8
+	setcycle 19 signalstop ""
+	setcycle 20 correct_response left
+	setcycle 20 stop_after ""
+	setcycle 20 target left
+	setcycle 20 targetcode 2
+	setcycle 20 signalstop ""
+	setcycle 21 correct_response right
+	setcycle 21 stop_after ""
+	setcycle 21 target right
+	setcycle 21 targetcode 8
+	setcycle 21 signalstop ""
+	setcycle 22 correct_response left
+	setcycle 22 stop_after ""
+	setcycle 22 target left
+	setcycle 22 targetcode 2
+	setcycle 22 signalstop ""
+	setcycle 23 correct_response right
+	setcycle 23 stop_after ""
+	setcycle 23 target right
+	setcycle 23 targetcode 8
+	setcycle 23 signalstop ""
+	setcycle 24 correct_response left
+	setcycle 24 stop_after ""
+	setcycle 24 target left
+	setcycle 24 targetcode 2
+	setcycle 24 signalstop ""
+	setcycle 25 correct_response right
+	setcycle 25 stop_after ""
+	setcycle 25 target right
+	setcycle 25 targetcode 8
+	setcycle 25 signalstop ""
+	setcycle 26 correct_response left
+	setcycle 26 stop_after ""
+	setcycle 26 target left
+	setcycle 26 targetcode 2
+	setcycle 26 signalstop ""
+	setcycle 27 correct_response right
+	setcycle 27 stop_after ""
+	setcycle 27 target right
+	setcycle 27 targetcode 8
+	setcycle 27 signalstop ""
+	setcycle 28 correct_response left
+	setcycle 28 stop_after ""
+	setcycle 28 target left
+	setcycle 28 targetcode 2
+	setcycle 28 signalstop ""
+	setcycle 29 correct_response right
+	setcycle 29 stop_after ""
+	setcycle 29 target right
+	setcycle 29 targetcode 8
+	setcycle 29 signalstop ""
+	setcycle 30 correct_response left
+	setcycle 30 stop_after ""
+	setcycle 30 target left
+	setcycle 30 targetcode 2
+	setcycle 30 signalstop ""
+	setcycle 31 correct_response right
+	setcycle 31 stop_after ""
+	setcycle 31 target right
+	setcycle 31 targetcode 8
+	setcycle 31 signalstop ""
+	setcycle 32 correct_response left
+	setcycle 32 stop_after ""
+	setcycle 32 target left
+	setcycle 32 targetcode 2
+	setcycle 32 signalstop ""
+	setcycle 33 correct_response right
+	setcycle 33 stop_after ""
+	setcycle 33 target right
+	setcycle 33 targetcode 8
+	setcycle 33 signalstop ""
+	setcycle 34 correct_response left
+	setcycle 34 stop_after ""
+	setcycle 34 target left
+	setcycle 34 targetcode 2
+	setcycle 34 signalstop ""
+	setcycle 35 correct_response right
+	setcycle 35 stop_after ""
+	setcycle 35 target right
+	setcycle 35 targetcode 8
+	setcycle 35 signalstop ""
+	run trial_sequence
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run SetlinesZero always
+	run about_this_example always
+	run instructions always
+	run CodeSettings always
+	run block_loop always
+	run finished always
+
+define sketchpad finished
+	set duration keypress
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="The experiment is finished!<br /><br />Press any key to exit." x=0 y=0 z_index=0
+
+define sketchpad fixdot
+	set duration 0
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+
+define sketchpad instructions
+	set start_response_interval no
+	set reset_variables no
+	set duration keypress
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="<b>Instructions</b><br /><br />On each trial, you will see an arrow.<br />Press the left arrow key if the arrow points to the left.<br />Press the right arrow key if the arrow points to the right.<br /><br />Unless you see a red square,<br />in which case you should withhold your response.<br /><br />Press any key to begin!" x=0 y=0 z_index=0
+
+define keyboard_response kb_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses "left;right"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define advanced_delay new_advanced_delay
+	set jitter_mode Uniform
+	set jitter 100
+	set duration 350
+	set description "Waits for a specified duration"
+
+define sketchpad stop_signal
+	set duration keypress
+	set description "Displays stimuli"
+	draw rect color=red fill=1 h=64 penwidth=1 show_if=always w=64 x=-32 y=-32 z_index=0
+
+define coroutines stop_signal_coroutines
+	set function_name ""
+	set flush_keyboard yes
+	set end_after_item kb_response
+	set duration 2000
+	set description "Run items simultaneously"
+	run StartStopsignal end="[signalstop]" runif="[stop_after] != \"\"" start="[stop_after]"
+	run stop_signal end="[stop_after]" runif="[stop_after] != \"\"" start="[stop_after]"
+	run target end=0 runif=always start=0
+	run kb_response end=2000 runif=always start=0
+
+define sketchpad target
+	set duration keypress
+	set description "Displays stimuli"
+	draw arrow arrow_body_length=0.8 arrow_body_width=0.5 arrow_head_width=30 color=white fill=1 penwidth=1 show_if="[target] = right" x1=-64 x2=64 y1=0 y2=0 z_index=0
+	draw arrow arrow_body_length=0.8 arrow_body_width=0.5 arrow_head_width=30 color=white fill=1 penwidth=1 show_if="[target] = left" x1=64 x2=-64 y1=0 y2=0 z_index=0
+
+define sequence trial_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run StartFixdot always
+	run fixdot always
+	run new_advanced_delay always
+	run StartTarget always
+	run stop_signal_coroutines always
+	run ResponseCalc always
+	run ResponseGiven "[response] = left or [response] = right"
+	run blank always
+	run SetlinesZero never
+	run ErrorFeedback "[correct] = 0"
+	run NoError "[correct] != 0"
+	run logger always
+
