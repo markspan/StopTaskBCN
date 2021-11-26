@@ -1,0 +1,18 @@
+Code	when
+1	Fixation
+255	Stop Signal Code
+#TARGET CODES:
+2	Target Left
+3	Target Left, Stopsignal will follow after 50ms
+4	Target Left, Stopsignal will follow after 150ms
+5	Target Left, Stopsignal will follow after 200ms
+8	Target Right
+9	Target Right, Stopsignal will follow after 50ms
+10	Target Right, Stopsignal will follow after 150ms
+11	Target Right, Stopsignal will follow after 200ms
+#RESPONSE CODES:
+130	Error, Target Right (thus: pressed Left!)
+131	Correct, Target Right
+132	Error, Target Left
+133	Correct, Target Left
+
