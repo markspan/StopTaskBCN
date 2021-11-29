@@ -4,7 +4,7 @@ Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to 
   simple and choice reaction time responses: a model and a method. *Journal of Experimental
   Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
 Description: Loosely based on Logan et al. (1984)
-OpenSesame: 3.3.2
+OpenSesame: 3.3.9
 Platform: nt
 Title: Stop-Signal Task
 ---
@@ -31,7 +31,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "C:/Users/p154492/Documents/StopTaskBCN"
+set experiment_path "C:\\Users\\user\\Desktop\\StopTaskBCN-main"
 set disable_garbage_collection yes
 set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
 set coordinates uniform
@@ -73,32 +73,36 @@ define inline_script ResponseCalc
 	___run__
 	isResponseCode = 128 
 	iscorrect = var.correct
-	isleft = (var.direction+1)*2
+	isleft = (var.direction + 1) * 2
 	
-	var.ResponseCode = isResponseCode+iscorrect+isleft
+	var.ResponseCode = isResponseCode + iscorrect + isleft + var.stopcode
+	# print(var.ResponseCode)
 	__end__
 	___prepare__
 	var.direction = int(var.target == 'left')
+	var.stopcode = 0
+	if (var.correct_response == 'None'):
+	    var.stopcode = 8
 	__end__
 
 define EVTxx ResponseGiven
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[ResponseCode]"
-	set _productName DUMMY
+	set _productName "EventExchanger-EVT02----010808 SN## 12005"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
 define EVTxx SetlinesZero
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value 0
-	set _productName DUMMY
+	set _productName "EventExchanger-EVT02----010808 SN## 12005"
 	set _outputMode "Set Output Lines"
 	set _duration 0
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[FixdotCode]"
-	set _productName DUMMY
+	set _productName "EventExchanger-EVT02----010808 SN## 12005"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -112,7 +116,7 @@ define inline_script StartStopsignal
 define EVTxx StartTarget
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[targetcode]"
-	set _productName DUMMY
+	set _productName "EventExchanger-EVT02----010808 SN## 12005"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -136,7 +140,7 @@ define loop block_loop
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
-	set cycles 18
+	set cycles 16
 	set continuous no
 	set column_order "target;stop_after;correct_response"
 	set break_if_on_first yes
@@ -150,21 +154,21 @@ define loop block_loop
 	setcycle 1 target right
 	setcycle 1 targetcode 9
 	setcycle 2 correct_response None
-	setcycle 2 stop_after 150
+	setcycle 2 stop_after 100
 	setcycle 2 target left
 	setcycle 2 targetcode 4
 	setcycle 3 correct_response None
-	setcycle 3 stop_after 150
+	setcycle 3 stop_after 100
 	setcycle 3 target right
 	setcycle 3 targetcode 10
-	setcycle 4 correct_response None
-	setcycle 4 stop_after 200
+	setcycle 4 correct_response left
+	setcycle 4 stop_after ""
 	setcycle 4 target left
-	setcycle 4 targetcode 5
-	setcycle 5 correct_response None
-	setcycle 5 stop_after 200
+	setcycle 4 targetcode 2
+	setcycle 5 correct_response right
+	setcycle 5 stop_after ""
 	setcycle 5 target right
-	setcycle 5 targetcode 11
+	setcycle 5 targetcode 8
 	setcycle 6 correct_response left
 	setcycle 6 stop_after ""
 	setcycle 6 target left
@@ -205,14 +209,6 @@ define loop block_loop
 	setcycle 15 stop_after ""
 	setcycle 15 target right
 	setcycle 15 targetcode 8
-	setcycle 16 correct_response left
-	setcycle 16 stop_after ""
-	setcycle 16 target left
-	setcycle 16 targetcode 2
-	setcycle 17 correct_response right
-	setcycle 17 stop_after ""
-	setcycle 17 target right
-	setcycle 17 targetcode 8
 	run trial_sequence
 
 define sequence experiment

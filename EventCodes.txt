@@ -11,8 +11,13 @@ Code	when
 10	Target Right, Stopsignal will follow after 150ms
 11	Target Right, Stopsignal will follow after 200ms
 #RESPONSE CODES:
-130	Error, Target Right (thus: pressed Left!)
+
+130	Error, Target Right 
 131	Correct, Target Right
 132	Error, Target Left
 133	Correct, Target Left
 
+138	Error, Target Right STOPTRIAL
+139	CORRECT: Target Right : NO RESPONSE: STOPTRIAL
+140	Error, Target Left STOPTRIAL
+141	CORRECT: Target Left  : NO RESPONSE: STOPTRIAL
