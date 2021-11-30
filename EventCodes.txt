@@ -4,12 +4,10 @@ Code	when
 #TARGET CODES:
 2	Target Left
 3	Target Left, Stopsignal will follow after 50ms
-4	Target Left, Stopsignal will follow after 150ms
-5	Target Left, Stopsignal will follow after 200ms
+4	Target Left, Stopsignal will follow after 100ms
 8	Target Right
 9	Target Right, Stopsignal will follow after 50ms
-10	Target Right, Stopsignal will follow after 150ms
-11	Target Right, Stopsignal will follow after 200ms
+10	Target Right, Stopsignal will follow after 100ms
 #RESPONSE CODES:
 
 130	Error, Target Right 
@@ -21,3 +19,4 @@ Code	when
 139	CORRECT: Target Right : NO RESPONSE: STOPTRIAL
 140	Error, Target Left STOPTRIAL
 141	CORRECT: Target Left  : NO RESPONSE: STOPTRIAL
+
