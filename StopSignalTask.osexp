@@ -4,7 +4,7 @@ Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to 
   simple and choice reaction time responses: a model and a method. *Journal of Experimental
   Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
 Description: Loosely based on Logan et al. (1984)
-OpenSesame: 3.3.9
+OpenSesame: 3.3.10
 Platform: nt
 Title: Stop-Signal Task
 ---
@@ -31,7 +31,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "C:\\Users\\user\\Documents\\GitHub\\StopTaskBCN"
+set experiment_path "D:\\Users\\mmspa\\Documents\\GitHub\\StopTaskBCN"
 set disable_garbage_collection yes
 set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
 set coordinates uniform
@@ -47,15 +47,18 @@ define inline_script CodeSettings
 	___run__
 	var.FixdotCode = 1
 	var.StopSignalCode = 255
-	var.PulseDuration = 10
+	var.PulseDuration = 10 
+	from pyEVT import EvtExchanger 
+	EE = EvtExchanger()
+	EE.Select("EVT")
 	
 	def sendStopCode():
 	    from pyEVT import EvtExchanger 
 	    yield
 	    if var.stop_after != "":
 	        clock.sleep(var.stop_after)
-	        EvtExchanger.PulseLines(var.StopSignalCode, 10) 
-	    
+	        #print(var.StopSignalCode)
+	        EE.PulseLines(var.StopSignalCode, 10) 
 	__end__
 	set _prepare ""
 
@@ -102,7 +105,7 @@ define EVTxx SetlinesZero
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[FixdotCode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 12005"
+	set _productName dummy
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -136,7 +139,7 @@ define loop block_loop
 	set source table
 	set skip 0
 	set repeat 8
-	set order random
+	set order sequential
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
