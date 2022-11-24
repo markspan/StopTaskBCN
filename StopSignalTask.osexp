@@ -4,7 +4,7 @@ Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to 
   simple and choice reaction time responses: a model and a method. *Journal of Experimental
   Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
 Description: Loosely based on Logan et al. (1984)
-OpenSesame: 3.3.10
+OpenSesame: 3.3.11
 Platform: nt
 Title: Stop-Signal Task
 ---
@@ -31,7 +31,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "D:\\Users\\mmspa\\Documents\\GitHub\\StopTaskBCN"
+set experiment_path "C:\\Users\\P154492\\Documents\\GitHub\\StopTaskBCN"
 set disable_garbage_collection yes
 set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
 set coordinates uniform
@@ -46,7 +46,7 @@ define inline_script CodeSettings
 	set description "Executes Python code"
 	___run__
 	var.FixdotCode = 1
-	var.StopSignalCode = 255
+	#var.StopSignalCode = 255
 	var.PulseDuration = 10 
 	from pyEVT import EvtExchanger 
 	EE = EvtExchanger()
@@ -91,21 +91,21 @@ define inline_script ResponseCalc
 define EVTxx ResponseGiven
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[ResponseCode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 12005"
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
 define EVTxx SetlinesZero
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value 0
-	set _productName "EventExchanger-EVT02----010808 SN## 12005"
+	set _productName DUMMY
 	set _outputMode "Set Output Lines"
 	set _duration 0
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[FixdotCode]"
-	set _productName dummy
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -119,7 +119,7 @@ define inline_script StartStopsignal
 define EVTxx StartTarget
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[targetcode]"
-	set _productName "EventExchanger-EVT02----010808 SN## 12005"
+	set _productName DUMMY
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -139,7 +139,7 @@ define loop block_loop
 	set source table
 	set skip 0
 	set repeat 8
-	set order sequential
+	set order random
 	set offset no
 	set item trial_sequence
 	set description "Repeatedly runs another item"
@@ -152,162 +152,202 @@ define loop block_loop
 	setcycle 0 stop_after 50
 	setcycle 0 target left
 	setcycle 0 targetcode 3
+	setcycle 0 StopSignalCode 254
 	setcycle 1 correct_response None
 	setcycle 1 stop_after 50
 	setcycle 1 target right
 	setcycle 1 targetcode 9
+	setcycle 1 StopSignalCode 255
 	setcycle 2 correct_response None
 	setcycle 2 stop_after 100
 	setcycle 2 target left
 	setcycle 2 targetcode 4
+	setcycle 2 StopSignalCode 252
 	setcycle 3 correct_response None
 	setcycle 3 stop_after 100
 	setcycle 3 target right
 	setcycle 3 targetcode 10
+	setcycle 3 StopSignalCode 253
 	setcycle 4 correct_response left
 	setcycle 4 stop_after ""
 	setcycle 4 target left
 	setcycle 4 targetcode 2
+	setcycle 4 StopSignalCode ""
 	setcycle 5 correct_response right
 	setcycle 5 stop_after ""
 	setcycle 5 target right
 	setcycle 5 targetcode 8
+	setcycle 5 StopSignalCode ""
 	setcycle 6 correct_response left
 	setcycle 6 stop_after ""
 	setcycle 6 target left
 	setcycle 6 targetcode 2
+	setcycle 6 StopSignalCode ""
 	setcycle 7 correct_response right
 	setcycle 7 stop_after ""
 	setcycle 7 target right
 	setcycle 7 targetcode 8
+	setcycle 7 StopSignalCode ""
 	setcycle 8 correct_response left
 	setcycle 8 stop_after ""
 	setcycle 8 target left
 	setcycle 8 targetcode 2
+	setcycle 8 StopSignalCode ""
 	setcycle 9 correct_response right
 	setcycle 9 stop_after ""
 	setcycle 9 target right
 	setcycle 9 targetcode 8
+	setcycle 9 StopSignalCode ""
 	setcycle 10 correct_response left
 	setcycle 10 stop_after ""
 	setcycle 10 target left
 	setcycle 10 targetcode 2
+	setcycle 10 StopSignalCode ""
 	setcycle 11 correct_response right
 	setcycle 11 stop_after ""
 	setcycle 11 target right
 	setcycle 11 targetcode 8
+	setcycle 11 StopSignalCode ""
 	setcycle 12 correct_response left
 	setcycle 12 stop_after ""
 	setcycle 12 target left
 	setcycle 12 targetcode 2
+	setcycle 12 StopSignalCode ""
 	setcycle 13 correct_response right
 	setcycle 13 stop_after ""
 	setcycle 13 target right
 	setcycle 13 targetcode 8
+	setcycle 13 StopSignalCode ""
 	setcycle 14 correct_response left
 	setcycle 14 stop_after ""
 	setcycle 14 target left
 	setcycle 14 targetcode 2
+	setcycle 14 StopSignalCode ""
 	setcycle 15 correct_response right
 	setcycle 15 stop_after ""
 	setcycle 15 target right
 	setcycle 15 targetcode 8
+	setcycle 15 StopSignalCode ""
 	setcycle 16 correct_response left
 	setcycle 16 stop_after ""
 	setcycle 16 target left
 	setcycle 16 targetcode 2
+	setcycle 16 StopSignalCode ""
 	setcycle 17 correct_response right
 	setcycle 17 stop_after ""
 	setcycle 17 target right
 	setcycle 17 targetcode 8
+	setcycle 17 StopSignalCode ""
 	setcycle 18 correct_response left
 	setcycle 18 stop_after ""
 	setcycle 18 target left
 	setcycle 18 targetcode 2
+	setcycle 18 StopSignalCode ""
 	setcycle 19 correct_response right
 	setcycle 19 stop_after ""
 	setcycle 19 target right
 	setcycle 19 targetcode 8
+	setcycle 19 StopSignalCode ""
 	setcycle 20 correct_response left
 	setcycle 20 stop_after ""
 	setcycle 20 target left
 	setcycle 20 targetcode 2
+	setcycle 20 StopSignalCode ""
 	setcycle 21 correct_response right
 	setcycle 21 stop_after ""
 	setcycle 21 target right
 	setcycle 21 targetcode 8
+	setcycle 21 StopSignalCode ""
 	setcycle 22 correct_response left
 	setcycle 22 stop_after ""
 	setcycle 22 target left
 	setcycle 22 targetcode 2
+	setcycle 22 StopSignalCode ""
 	setcycle 23 correct_response right
 	setcycle 23 stop_after ""
 	setcycle 23 target right
 	setcycle 23 targetcode 8
+	setcycle 23 StopSignalCode ""
 	setcycle 24 correct_response left
 	setcycle 24 stop_after ""
 	setcycle 24 target left
 	setcycle 24 targetcode 2
+	setcycle 24 StopSignalCode ""
 	setcycle 25 correct_response right
 	setcycle 25 stop_after ""
 	setcycle 25 target right
 	setcycle 25 targetcode 8
+	setcycle 25 StopSignalCode ""
 	setcycle 26 correct_response left
 	setcycle 26 stop_after ""
 	setcycle 26 target left
 	setcycle 26 targetcode 2
+	setcycle 26 StopSignalCode ""
 	setcycle 27 correct_response right
 	setcycle 27 stop_after ""
 	setcycle 27 target right
 	setcycle 27 targetcode 8
+	setcycle 27 StopSignalCode ""
 	setcycle 28 correct_response left
 	setcycle 28 stop_after ""
 	setcycle 28 target left
 	setcycle 28 targetcode 2
+	setcycle 28 StopSignalCode ""
 	setcycle 29 correct_response right
 	setcycle 29 stop_after ""
 	setcycle 29 target right
 	setcycle 29 targetcode 8
+	setcycle 29 StopSignalCode ""
 	setcycle 30 correct_response left
 	setcycle 30 stop_after ""
 	setcycle 30 target left
 	setcycle 30 targetcode 2
+	setcycle 30 StopSignalCode ""
 	setcycle 31 correct_response right
 	setcycle 31 stop_after ""
 	setcycle 31 target right
 	setcycle 31 targetcode 8
+	setcycle 31 StopSignalCode ""
 	setcycle 32 correct_response left
 	setcycle 32 stop_after ""
 	setcycle 32 target left
 	setcycle 32 targetcode 2
+	setcycle 32 StopSignalCode ""
 	setcycle 33 correct_response right
 	setcycle 33 stop_after ""
 	setcycle 33 target right
 	setcycle 33 targetcode 8
+	setcycle 33 StopSignalCode ""
 	setcycle 34 correct_response left
 	setcycle 34 stop_after ""
 	setcycle 34 target left
 	setcycle 34 targetcode 2
+	setcycle 34 StopSignalCode ""
 	setcycle 35 correct_response right
 	setcycle 35 stop_after ""
 	setcycle 35 target right
 	setcycle 35 targetcode 8
+	setcycle 35 StopSignalCode ""
 	setcycle 36 correct_response left
 	setcycle 36 stop_after ""
 	setcycle 36 target left
 	setcycle 36 targetcode 2
+	setcycle 36 StopSignalCode ""
 	setcycle 37 correct_response right
 	setcycle 37 stop_after ""
 	setcycle 37 target right
 	setcycle 37 targetcode 8
+	setcycle 37 StopSignalCode ""
 	setcycle 38 correct_response left
 	setcycle 38 stop_after ""
 	setcycle 38 target left
 	setcycle 38 targetcode 2
+	setcycle 38 StopSignalCode ""
 	setcycle 39 correct_response right
 	setcycle 39 stop_after ""
 	setcycle 39 target right
 	setcycle 39 targetcode 8
+	setcycle 39 StopSignalCode ""
 	run trial_sequence
 
 define sequence experiment
