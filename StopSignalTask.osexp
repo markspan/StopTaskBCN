@@ -44,13 +44,15 @@ set background black
 
 define inline_script CodeSettings
 	set description "Executes Python code"
-	___run__
+	set _run ""
+	___prepare__
 	var.FixdotCode = 1
-	#var.StopSignalCode = 255
-	var.PulseDuration = 10 
+	var.PulseDuration = 100 
+	
 	from pyEVT import EvtExchanger 
 	EE = EvtExchanger()
 	EE.Select("EVT")
+	var.Device = EE.Select("EVT").get_product_string()
 	
 	def sendStopCode():
 	    from pyEVT import EvtExchanger 
@@ -58,9 +60,8 @@ define inline_script CodeSettings
 	    if var.stop_after != "":
 	        clock.sleep(var.stop_after)
 	        #print(var.StopSignalCode)
-	        EE.PulseLines(var.StopSignalCode, 10) 
+	        EE.PulseLines(var.StopSignalCode, var.PulseDuration) 
 	__end__
-	set _prepare ""
 
 define sketchpad ErrorFeedback
 	set duration 900
@@ -91,21 +92,21 @@ define inline_script ResponseCalc
 define EVTxx ResponseGiven
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[ResponseCode]"
-	set _productName DUMMY
+	set _productName "[Device]"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
 define EVTxx SetlinesZero
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value 0
-	set _productName DUMMY
+	set _productName "[Device]"
 	set _outputMode "Set Output Lines"
 	set _duration 0
 
 define EVTxx StartFixdot
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[FixdotCode]"
-	set _productName DUMMY
+	set _productName "[Device]"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -119,7 +120,7 @@ define inline_script StartStopsignal
 define EVTxx StartTarget
 	set description "Allows setting or pulsing values of pins on the output port of various EventExchanger devices"
 	set _value "[targetcode]"
-	set _productName DUMMY
+	set _productName "[Device]"
 	set _outputMode "Pulse Output Lines"
 	set _duration "[PulseDuration]"
 
@@ -136,6 +137,7 @@ define sketchpad blank
 	set description "Displays stimuli"
 
 define loop block_loop
+	set source_file ""
 	set source table
 	set skip 0
 	set repeat 8
@@ -353,10 +355,10 @@ define loop block_loop
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
+	run CodeSettings always
 	run SetlinesZero always
 	run about_this_example always
 	run instructions always
-	run CodeSettings always
 	run block_loop always
 	run finished always
 
